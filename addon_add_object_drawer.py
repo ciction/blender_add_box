@@ -40,19 +40,19 @@ def add_object(self, context):
     ]
     topMesh = [
         # bottomVertices
-        Vector((-1 * scale_x/2, 1 * scale_y/2, bottom_thickness + scale_z)),
-        Vector((1 * scale_x/2, 1 * scale_y/2, bottom_thickness + scale_z)),
-        Vector((1 * scale_x/2, -1 * scale_y/2, bottom_thickness + scale_z)),
-        Vector((-1 * scale_x/2, -1 * scale_y/2, bottom_thickness + scale_z)),
+        Vector((-1 * scale_x/2, 1 * scale_y/2, scale_z)),
+        Vector((1 * scale_x/2, 1 * scale_y/2, scale_z)),
+        Vector((1 * scale_x/2, -1 * scale_y/2, scale_z)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2, scale_z)),
         # topVertices
         Vector((-1 * scale_x/2, 1 * scale_y/2,
-                bottom_thickness + top_thickness + scale_z)),
+                 - top_thickness + scale_z)),
         Vector((1 * scale_x/2, 1 * scale_y/2,
-                bottom_thickness + top_thickness + scale_z)),
+                - top_thickness + scale_z)),
         Vector((1 * scale_x/2, -1 * scale_y/2,
-                bottom_thickness + top_thickness + scale_z)),
+                - top_thickness + scale_z)),
         Vector((-1 * scale_x/2, -1 * scale_y/2,
-                bottom_thickness + top_thickness + scale_z)),
+               - top_thickness + scale_z)),
     ]
     verts = bottomMesh
     if has_top:
