@@ -32,31 +32,46 @@ print("----------------------")
 #     print(offset)
 
 
-faces_template = [
-    # bottom
-    [0, 1, 2, 3],
-    # top
-    [4, 5, 6, 7],
-    # back
-    [0, 1, 5, 4],
-    # front
-    [2, 3, 7, 6],
-    # left
-    [0, 4, 7, 3],
-    # right
-    [6, 5, 1, 2]
-]
 
-faces = []
-for x in range(0, len(faces_template)*2):
-    repeatingIndex = faces_template[x % len(faces_template)]
-    loopCounter = x // len(faces_template)
-    offset = loopCounter * 8
+# #===============================================================================================
 
+# faces_template = [
+#     # bottom
+#     [0, 1, 2, 3],
+#     # top
+#     [4, 5, 6, 7],
+#     # back
+#     [0, 1, 5, 4],
+#     # front
+#     [2, 3, 7, 6],
+#     # left
+#     [0, 4, 7, 3],
+#     # right
+#     [6, 5, 1, 2]
+# ]
 
-    offset_vector = [offset,offset,offset,offset]
-    newVector = [repeatingIndex[i]+offset_vector[i] for i in range(len(repeatingIndex))]
-    faces.append(newVector)
+# faces = []
+# for x in range(0, len(faces_template)*2):
+#     repeatingIndex = faces_template[x % len(faces_template)]
+#     loopCounter = x // len(faces_template)
+#     offset = loopCounter * 8
 
 
-print(faces)
+#     offset_vector = [offset,offset,offset,offset]
+#     newVector = [repeatingIndex[i]+offset_vector[i] for i in range(len(repeatingIndex))]
+#     faces.append(newVector)
+
+
+# print(faces)
+
+# #===============================================================================================
+
+
+
+
+array1 = [1,2,3]
+array2 = [4,5,6]
+
+array1 = array1 + array2
+
+print(array1)
