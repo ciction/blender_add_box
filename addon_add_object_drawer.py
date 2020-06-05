@@ -23,6 +23,7 @@ def add_object(self, context):
     scale_z = self.scale.z
     bottom_thickness = self.bottom_thickness
     top_thickness = self.top_thickness
+    sides_thickness = self.sides_thickness
     has_top = self.has_top
 
     bottomMesh = [
@@ -59,11 +60,11 @@ def add_object(self, context):
         Vector((-1 * scale_x/2, 1 * scale_y/2, - top_thickness + scale_z)),
 
         #innerverticesBottom
-        Vector((-1 * scale_x/2 + 0.02, 1 * scale_y/2,  bottom_thickness)),
-        Vector((-1 * scale_x/2 + 0.02, -1 * scale_y/2, bottom_thickness)),
+        Vector((-1 * scale_x/2 + sides_thickness, 1 * scale_y/2,  bottom_thickness)),
+        Vector((-1 * scale_x/2 + sides_thickness, -1 * scale_y/2, bottom_thickness)),
         #innerverticesTop
-        Vector((-1 * scale_x/2 + 0.02, -1 * scale_y/2, -top_thickness + scale_z)),
-        Vector((-1 * scale_x/2 + 0.02, 1 * scale_y/2, - top_thickness + scale_z)),
+        Vector((-1 * scale_x/2 + sides_thickness, -1 * scale_y/2, -top_thickness + scale_z)),
+        Vector((-1 * scale_x/2 + sides_thickness, 1 * scale_y/2, - top_thickness + scale_z)),
     ]
 
     verts = bottomMesh
@@ -134,6 +135,11 @@ class OBJECT_OT_add_object(Operator, AddObjectHelper):
 
     bottom_thickness: bpy.props.FloatProperty(
         name="Bottom thickness",
+        unit='LENGTH',
+        default=0.02
+    )
+    sides_thickness: bpy.props.FloatProperty(
+        name="Sides thickness",
         unit='LENGTH',
         default=0.02
     )
