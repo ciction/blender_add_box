@@ -57,7 +57,6 @@ def add_object(self, context):
     verts = bottomMesh
     if has_top:
         verts += topMesh
-    
 
     # for vert in verts:
     #     vert.z += 0
@@ -97,6 +96,8 @@ def add_object(self, context):
     # mesh.validate(verbose=True)
     newObject = object_data_add(context, mesh, operator=self)
 
+    if self.seperateParts:
+        bpy.ops.mesh.separate(type='LOOSE')
 
 
 class OBJECT_OT_add_object(Operator, AddObjectHelper):
@@ -112,14 +113,14 @@ class OBJECT_OT_add_object(Operator, AddObjectHelper):
         description="scaling",
     )
 
-    bottom_thickness: bpy.props.FloatProperty(
-        name="Bottom thickness",
+    top_thickness: bpy.props.FloatProperty(
+        name="Top thickness",
         unit='LENGTH',
         default=0.02
     )
 
-    top_thickness: bpy.props.FloatProperty(
-        name="Top thickness",
+    bottom_thickness: bpy.props.FloatProperty(
+        name="Bottom thickness",
         unit='LENGTH',
         default=0.02
     )
@@ -127,6 +128,11 @@ class OBJECT_OT_add_object(Operator, AddObjectHelper):
     has_top:  bpy.props.BoolProperty(
         name="Top"
     )
+
+    seperateParts:  bpy.props.BoolProperty(
+            name="Separate Parts"
+        )
+
 
     def execute(self, context):
 
