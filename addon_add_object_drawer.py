@@ -97,8 +97,6 @@ def add_object(self, context):
     # mesh.validate(verbose=True)
     newObject = object_data_add(context, mesh, operator=self)
 
-#    bpy.ops.object.modifier_add(type='SOLIDIFY')
-#    bpy.context.object.modifiers["Solidify"].thickness = my_float
 
 
 class OBJECT_OT_add_object(Operator, AddObjectHelper):
