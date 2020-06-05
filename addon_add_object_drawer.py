@@ -33,10 +33,10 @@ def add_object(self, context):
         Vector((-1 * scale_x/2, -1 * scale_y/2, 0)),
 
         # topVertices
-        Vector((-1 * scale_x/2, 1 * scale_y/2, bottom_thickness)),
+        Vector((-1 * scale_x/2, 1 * scale_y/2, bottom_thickness)),  # 4
         Vector((1 * scale_x/2, 1 * scale_y/2, bottom_thickness)),
         Vector((1 * scale_x/2, -1 * scale_y/2, bottom_thickness)),
-        Vector((-1 * scale_x/2, -1 * scale_y/2, bottom_thickness)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2, bottom_thickness)),  # 7
     ]
     topMesh = [
         # bottomVertices
@@ -45,18 +45,31 @@ def add_object(self, context):
         Vector((1 * scale_x/2, -1 * scale_y/2, scale_z)),
         Vector((-1 * scale_x/2, -1 * scale_y/2, scale_z)),
         # topVertices
-        Vector((-1 * scale_x/2, 1 * scale_y/2,
-                 - top_thickness + scale_z)),
-        Vector((1 * scale_x/2, 1 * scale_y/2,
-                - top_thickness + scale_z)),
-        Vector((1 * scale_x/2, -1 * scale_y/2,
-                - top_thickness + scale_z)),
-        Vector((-1 * scale_x/2, -1 * scale_y/2,
-               - top_thickness + scale_z)),
+        Vector((-1 * scale_x/2, 1 * scale_y/2, - top_thickness + scale_z)),  # 12
+        Vector((1 * scale_x/2, 1 * scale_y/2, - top_thickness + scale_z)),
+        Vector((1 * scale_x/2, -1 * scale_y/2, - top_thickness + scale_z)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2, - top_thickness + scale_z))  # 15
     ]
+    leftMesh = [
+        # outerVeticesBottom
+        Vector((-1 * scale_x/2, 1 * scale_y/2,  bottom_thickness)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2, bottom_thickness)),
+        # outerVeticesTop
+        Vector((-1 * scale_x/2, -1 * scale_y/2, -top_thickness + scale_z)),
+        Vector((-1 * scale_x/2, 1 * scale_y/2, - top_thickness + scale_z)),
+
+        #innerverticesBottom
+        Vector((-1 * scale_x/2 + 0.02, 1 * scale_y/2,  bottom_thickness)),
+        Vector((-1 * scale_x/2 + 0.02, -1 * scale_y/2, bottom_thickness)),
+        #innerverticesTop
+        Vector((-1 * scale_x/2 + 0.02, -1 * scale_y/2, -top_thickness + scale_z)),
+        Vector((-1 * scale_x/2 + 0.02, 1 * scale_y/2, - top_thickness + scale_z)),
+    ]
+
     verts = bottomMesh
     if has_top:
         verts += topMesh
+        verts += leftMesh
 
     # for vert in verts:
     #     vert.z += 0
@@ -130,9 +143,8 @@ class OBJECT_OT_add_object(Operator, AddObjectHelper):
     )
 
     seperateParts:  bpy.props.BoolProperty(
-            name="Separate Parts"
-        )
-
+        name="Separate Parts"
+    )
 
     def execute(self, context):
 
