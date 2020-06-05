@@ -17,6 +17,7 @@ bl_info = {
 
 
 def add_object(self, context):
+    VERICES_PER_MESH = 8
     scale_x = self.scale.x
     scale_y = self.scale.y
     scale_z = self.scale.z
@@ -24,29 +25,26 @@ def add_object(self, context):
     top_thickness = self.top_thickness
     has_top = self.has_top
 
-
-    verts = [
-        # bottom
+    bottomMesh = [
+        # bottomVertices
         Vector((-1 * scale_x/2, 1 * scale_y/2, 0)),
         Vector((1 * scale_x/2, 1 * scale_y/2, 0)),
         Vector((1 * scale_x/2, -1 * scale_y/2, 0)),
         Vector((-1 * scale_x/2, -1 * scale_y/2, 0)),
 
-        # top
+        # topVertices
         Vector((-1 * scale_x/2, 1 * scale_y/2, bottom_thickness)),
         Vector((1 * scale_x/2, 1 * scale_y/2, bottom_thickness)),
         Vector((1 * scale_x/2, -1 * scale_y/2, bottom_thickness)),
         Vector((-1 * scale_x/2, -1 * scale_y/2, bottom_thickness)),
-
-
-
-        # bottom
+    ]
+    topMesh = [
+        # bottomVertices
         Vector((-1 * scale_x/2, 1 * scale_y/2, bottom_thickness + scale_z)),
         Vector((1 * scale_x/2, 1 * scale_y/2, bottom_thickness + scale_z)),
         Vector((1 * scale_x/2, -1 * scale_y/2, bottom_thickness + scale_z)),
         Vector((-1 * scale_x/2, -1 * scale_y/2, bottom_thickness + scale_z)),
-
-        # top
+        # topVertices
         Vector((-1 * scale_x/2, 1 * scale_y/2,
                 bottom_thickness + top_thickness + scale_z)),
         Vector((1 * scale_x/2, 1 * scale_y/2,
@@ -56,9 +54,13 @@ def add_object(self, context):
         Vector((-1 * scale_x/2, -1 * scale_y/2,
                 bottom_thickness + top_thickness + scale_z)),
     ]
+    verts = bottomMesh
+    if has_top:
+        verts += topMesh
+    
 
-    for vert in verts:
-        vert.z += 0
+    # for vert in verts:
+    #     vert.z += 0
 
     edges = []
 
@@ -78,7 +80,7 @@ def add_object(self, context):
         [6, 5, 1, 2]
     ]
 
-    indexRange = len(faces_template) + 6 if has_top else len(faces_template)
+    indexRange = int(len(verts) / VERICES_PER_MESH * len(faces_template))
     for x in range(0, indexRange):
         repeatingIndex = faces_template[x % len(faces_template)]
         loopCounter = x // len(faces_template)
