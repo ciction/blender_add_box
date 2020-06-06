@@ -27,31 +27,39 @@ def add_object(self, context):
     has_top = self.has_top
     has_left = self.has_left
     has_right = self.has_right
+    has_front = self.has_front
+    front_direction = self.front_direction
+
+    
+    front_y_offset = 0
+    if front_direction == "outside_2":
+        front_y_offset = sides_thickness
+
 
     bottomMesh = [
         # bottomVertices
         Vector((-1 * scale_x/2, 1 * scale_y/2, 0)),
         Vector((1 * scale_x/2, 1 * scale_y/2, 0)),
-        Vector((1 * scale_x/2, -1 * scale_y/2, 0)),
-        Vector((-1 * scale_x/2, -1 * scale_y/2, 0)),
+        Vector((1 * scale_x/2, -1 * scale_y/2 + front_y_offset, 0)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2  + front_y_offset, 0)),
 
         # topVertices
         Vector((-1 * scale_x/2, 1 * scale_y/2, bottom_thickness)),  # 4
-        Vector((1 * scale_x/2, 1 * scale_y/2, bottom_thickness)), 
-        Vector((1 * scale_x/2, -1 * scale_y/2, bottom_thickness)),
-        Vector((-1 * scale_x/2, -1 * scale_y/2, bottom_thickness)),  # 7
+        Vector((1 * scale_x/2, 1 * scale_y/2, bottom_thickness)),
+        Vector((1 * scale_x/2, -1 * scale_y/2  + front_y_offset, bottom_thickness)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2  + front_y_offset, bottom_thickness)),  # 7
     ]
     topMesh = [
         # bottomVertices
         Vector((-1 * scale_x/2, 1 * scale_y/2, scale_z)),
         Vector((1 * scale_x/2, 1 * scale_y/2, scale_z)),
-        Vector((1 * scale_x/2, -1 * scale_y/2, scale_z)),
-        Vector((-1 * scale_x/2, -1 * scale_y/2, scale_z)),
+        Vector((1 * scale_x/2, -1 * scale_y/2  + front_y_offset, scale_z)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2  + front_y_offset, scale_z)),
         # topVertices
         Vector((-1 * scale_x/2, 1 * scale_y/2, - top_thickness + scale_z)),  # 12
         Vector((1 * scale_x/2, 1 * scale_y/2, - top_thickness + scale_z)),
-        Vector((1 * scale_x/2, -1 * scale_y/2, - top_thickness + scale_z)),
-        Vector((-1 * scale_x/2, -1 * scale_y/2, - top_thickness + scale_z))  # 15
+        Vector((1 * scale_x/2, -1 * scale_y/2  + front_y_offset , - top_thickness + scale_z)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2  + front_y_offset , - top_thickness + scale_z))  # 15
     ]
     leftMesh = [
         # outerVeticesBottom
@@ -62,30 +70,65 @@ def add_object(self, context):
         Vector((-1 * scale_x/2, 1 * scale_y/2, - top_thickness + scale_z)),
 
         # innerverticesBottom
-        Vector((-1 * scale_x/2 + sides_thickness,
-                1 * scale_y/2,  bottom_thickness)),
-        Vector((-1 * scale_x/2 + sides_thickness, - \
-                1 * scale_y/2, bottom_thickness)),
+        Vector((-1 * scale_x/2 + sides_thickness, 1 * scale_y/2,  bottom_thickness)),
+        Vector((-1 * scale_x/2 + sides_thickness, -1 * scale_y/2, bottom_thickness)),
         # innerverticesTop
-        Vector((-1 * scale_x/2 + sides_thickness, -1 * \
-                scale_y/2, -top_thickness + scale_z)),
-        Vector((-1 * scale_x/2 + sides_thickness, 1 * \
-                scale_y/2, - top_thickness + scale_z)),
+        Vector((-1 * scale_x/2 + sides_thickness, -1 * scale_y/2, -top_thickness + scale_z)),
+        Vector((-1 * scale_x/2 + sides_thickness, 1 * scale_y/2, - top_thickness + scale_z)),
     ]
     rightMesh = [
-        Vector((1 * scale_x/2, 1 * scale_y/2, bottom_thickness)), 
+        Vector((1 * scale_x/2, 1 * scale_y/2, bottom_thickness)),
         Vector((1 * scale_x/2, -1 * scale_y/2, bottom_thickness)),
         Vector((1 * scale_x/2, -1 * scale_y/2, - top_thickness + scale_z)),
         Vector((1 * scale_x/2, 1 * scale_y/2, - top_thickness + scale_z)),
 
-        Vector((1 * scale_x/2 - sides_thickness, 1 * scale_y/2, bottom_thickness)), 
-        Vector((1 * scale_x/2 - sides_thickness, -1 * scale_y/2, bottom_thickness)),
+        Vector((1 * scale_x/2 - sides_thickness, 1 * scale_y/2, bottom_thickness)),
+        Vector((1 * scale_x/2 - sides_thickness, - 1 * scale_y/2, bottom_thickness)),
         Vector((1 * scale_x/2 - sides_thickness, -1 * scale_y/2, - top_thickness + scale_z)),
         Vector((1 * scale_x/2 - sides_thickness, 1 * scale_y/2, - top_thickness + scale_z)),
 
 
     ]
+    frontMeshInside = [
+        Vector((1 * scale_x/2 - sides_thickness, - 1 * scale_y/2, bottom_thickness)),
+        Vector((-1 * scale_x/2 + sides_thickness, - 1 * scale_y/2, bottom_thickness)),
+        Vector((-1 * scale_x/2 + sides_thickness, -1 * scale_y/2, - top_thickness + scale_z)),
+        Vector((1 * scale_x/2 - sides_thickness, -1 * scale_y/2, - top_thickness + scale_z)),
 
+        # Inner
+        Vector((1 * scale_x/2 - sides_thickness, -1 * scale_y/2 + sides_thickness, bottom_thickness)),
+        Vector((-1 * scale_x/2 + sides_thickness, -1 * scale_y/2 + sides_thickness, bottom_thickness)),
+        Vector((-1 * scale_x/2 + sides_thickness, -1 * scale_y / 2 + sides_thickness, - top_thickness + scale_z)),
+        Vector((1 * scale_x/2 - sides_thickness, -1 * scale_y / 2 + sides_thickness, - top_thickness + scale_z)),
+    ]
+    
+    frontMeshOutside_1 = [
+        Vector((1 * scale_x/2, -1 * scale_y/2, 0)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2, 0)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2,  scale_z)),
+        Vector((1 * scale_x/2, -1 * scale_y/2,  scale_z)),
+
+        # outer
+        Vector((1 * scale_x/2, -1 * scale_y/2 - sides_thickness, 0)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2 - sides_thickness, 0)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2 - sides_thickness,  + scale_z)),
+        Vector((1 * scale_x/2, -1 * scale_y/2 - sides_thickness,  + scale_z)),
+    ]
+
+    frontMeshOutside_2 = [
+        Vector((1 * scale_x/2, -1 * scale_y/2, 0)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2, 0)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2,  scale_z)),
+        Vector((1 * scale_x/2, -1 * scale_y/2,  scale_z)),
+
+        # inner
+        Vector(( 1 * scale_x/2, -1 * scale_y/2 + sides_thickness, 0)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2 + sides_thickness, 0)),
+        Vector((-1 * scale_x/2, -1 * scale_y/2 + sides_thickness,  + scale_z)),
+        Vector(( 1 * scale_x/2, -1 * scale_y/2 + sides_thickness,  + scale_z)),
+    ]
+
+    print("front_direction:"+ front_direction)
     verts = bottomMesh
     if has_top:
         verts += topMesh
@@ -93,6 +136,15 @@ def add_object(self, context):
         verts += leftMesh
     if has_right:
         verts += rightMesh
+    if has_front:
+        if front_direction == "inside":
+            verts += frontMeshInside
+        elif front_direction == "outside_1":
+            verts += frontMeshOutside_1
+        elif front_direction == "outside_2":
+            verts += frontMeshOutside_2
+            
+
 
     # for vert in verts:
     #     vert.z += 0
@@ -175,10 +227,24 @@ class OBJECT_OT_add_object(Operator, AddObjectHelper):
         name="Left",
         default=True
     )
-    
+
     has_right:  bpy.props.BoolProperty(
         name="Right",
         default=True
+    )
+    has_front:  bpy.props.BoolProperty(
+        name="Front",
+        default=True
+    )
+    front_direction:  bpy.props.EnumProperty(
+        name="Front direction",
+        items=[
+            # (unique identifier, property name, property description, icon identifier, number)
+            ('inside', 'inside', 'Make the front panel within the object', 0),
+            ('outside_1', 'outside simple', 'Make the front panel within the object', 1),
+            ('outside_2', 'outside', 'Make the front panel on top of the object', 2)
+        ],
+        default='inside'
     )
 
     seperateParts:  bpy.props.BoolProperty(

@@ -1,0 +1,9 @@
+{
+    "python.formatting.blackArgs": [
+        "--line-length 119"
+    ],
+    "python.formatting.autopep8Args": [
+        "--max-line-length=200"
+    ]
+
+}
